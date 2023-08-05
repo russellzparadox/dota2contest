@@ -1,0 +1,25 @@
+{% extends 'home.html' %}
+{% block title %}join team{% endblock %}
+{% block content %}
+    <h1>Join a Team for {{ competition.name }}</h1>
+    <form method="post" role="search" class="d-flex">
+        {% csrf_token %}
+        <input type="hidden" name="flag" id="flag" value="0">
+        <label for="search"></label>
+        <input type="text" class="form-control me-2" id="search" name="search" placeholder="Team name" required>
+        <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+
+
+    {% for team in teams %}
+        <form method="post" action="">
+            {% csrf_token %}
+            <input type="hidden" name="flag" id="flag" value="1">
+
+            <input type="hidden" name="team_name" id="team_name" value="{{ team.id }}">
+            <label for="{{ team.id }}">{{ team.Name }}</label>
+            <button type="submit">join</button>
+            {#            <input type="submit" name="{{ team.id }}" id="{{ team.id }}">#}
+        </form>
+    {% endfor %}
+{% endblock %}

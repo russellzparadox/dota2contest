@@ -1,0 +1,24 @@
+{% extends 'home.html' %}
+{% block title %}Create Team{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            {% for comp in comps %}
+                <div class="col-lg-4 col-md-6 mb-4">
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ comp.name }}</h5>
+                            <p class="card-text"><strong>Description:</strong> {{ comp.description }}</p>
+                            <p class="card-text"><strong>Start Date:</strong> {{ comp.start_date }}</p>
+                            <p class="card-text"><strong>End Date:</strong> {{ comp.end_date }}</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="{% url 'ShowComp' id=comp.id %}" class="btn btn-outline-primary">See more</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

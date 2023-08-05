@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Your App{% endblock %}</title>
+    <link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh
+        }
+
+        header {
+            background-color: #522546;
+            color: #fff;
+            padding: 10px 0;
+        {#position: fixed;#} top: 0;
+            width: 100%;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+            height: 100%;
+        {#display: flex;#}{#justify-content: center#}
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .user-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+            object-fit: cover;
+        }
+
+        .user-username {
+            color: #fff;
+        }
+
+        nav {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav a {
+            line-height: 100%;
+        }
+
+        .cbtn {
+            color: white !important;
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #88304E;
+            color: rgba(0, 0, 0, .5);
+            border-radius: 6px;
+        }
+
+        .cbtn:hover {
+            color: rgba(0, 0, 0, .8);
+            background-color: #8a97a0;
+        }
+
+        @media screen and (max-width: 600px) {
+            /* Adjust header styles for mobile */
+            header {
+                padding: 5px 0;
+            }
+
+            /* Adjust margin for smaller screens */
+            .container {
+                margin: 60px auto 0;
+            }
+        }
+    </style>
+    {% block styleSheet %}{% endblock %}
+</head>
+<body>
+<header>
+    <div class="container">
+        <nav>
+            <ul>
+                <li><a href="{% url 'index' %}">Home</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'list_competitions' %}">Competitions</a></li>
+                {% endif %}
+                <!-- Add more links as needed -->
+            </ul>
+            <div class="user-info">
+                {% if user.is_authenticated %}
+                    {% if user.profile.picture %}
+                        <img src="{{ user.profile.picture.url }}" alt="User Avatar" class="user-avatar">
+                    {% else %}
+                        <img src="{{ user.profile.profile_picture.url }}" alt="User Avatar" class="user-avatar">
+                    {% endif %}
+                    <span class="user-username">{{ user.username }}</span>
+                    <a class="cbtn" href="{% url 'logout' %}">Logout</a>
+                {% else %}
+                    <a class="cbtn" href="{% url 'login' %}">Login</a>
+                    <a class="cbtn" href="{% url 'signup' %}">Sign Up</a>
+                {% endif %}
+            </div>
+        </nav>
+    </div>
+</header>
+
+<div class="container">
+    {% block content %}{% endblock %}
+</div>
+{% block scripts %}{% endblock %}
+</body>
+</html>
