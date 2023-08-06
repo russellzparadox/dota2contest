@@ -11,12 +11,18 @@ class Competitions(models.Model):
     end_date = models.DateField()
     description = models.TextField(null=True, blank=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Teams(models.Model):
     Name = models.CharField(unique=True, max_length=30)
     members = models.ManyToManyField(CustomUser, related_name='teams_joined')
     creator = models.ForeignKey(CustomUser, null=True, on_delete=models.CASCADE, related_name='team_created')
     competition = models.ForeignKey(Competitions, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.Name
 
     def clean(self):
         if self.members.count() > 5:

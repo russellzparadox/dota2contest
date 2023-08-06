@@ -20,7 +20,7 @@ class CustomUser(AbstractUser):
         return self.teams_joined.filter(competition=competition).exists()
 
     def __str__(self):
-        return self.first_name
+        return self.email
 
 
 def validate_phone_number(value):

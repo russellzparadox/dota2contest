@@ -72,19 +72,18 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 return redirect('user_info')
-        else:
-            errorStr = "Invalid username or password."
-            if form.errors:
-                for field in form:
-                    for error in field.errors:
-                        if field.label == 'Captcha':
-                            errorStr = 'pleas verify that you are human'
-            form = LoginForm()
-            return render(request, 'login.html', {'form': form, 'error_message': errorStr})
-
+            else:
+                errorStr = "Invalid username or password."
+                if form.errors:
+                    for field in form:
+                        for error in field.errors:
+                            if field.label == 'Captcha':
+                                errorStr = 'pleas verify that you are human'
+                form = LoginForm()
+                return render(request, 'login.html', {'form': form, 'error_message': errorStr})
     else:
         form = LoginForm()
-        return render(request, 'login.html', {'form': form, })
+    return render(request, 'login.html', {'form': form, })
 
 
 @login_required

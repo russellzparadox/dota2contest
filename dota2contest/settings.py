@@ -29,6 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['192.168.177.43', '127.0.0.1']
 
 # Application definition
+SITE_ID = 2
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -37,17 +38,41 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+
+    'django_extensions',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+
     'accounts.apps.AccountsConfig',
     'competitions',
-    'bootstrap5',
     'captcha',
-    'django_extensions',
-
 ]
+SOCIALACCOUNT_LOGIN_ON_GET = True
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend'
+]
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 LOGIN_URL = '/login'
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
